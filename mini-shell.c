@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <wait.h>
 #include <ctype.h>
+#include "builtin.h"
 #define BUFFER_SIZE 512
 #define DELIM " "
 
