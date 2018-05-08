@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -6,17 +7,16 @@
 #include <wait.h>
 #include "util.h"
 #include "builtin.h"
-#define BUFFER_SIZE 512
 #define DELIM " "
 
 
 //////////// MAIN ////////////
 
 int main() {
-  printf("Welcome to mini-shell! Type *nothing* to exit.\n");
+  printf("Welcome to mini-shell!\n");
 
   // input handling
-  char buffer[BUFFER_SIZE];
+  char* input = NULL;
   char* argv[128];
   unsigned short argc;
   char *inF, *outF;
@@ -24,18 +24,15 @@ int main() {
 
   while(1) {
     // reading from user
-    printf("> ");
-    fgets(buffer, BUFFER_SIZE, stdin);
-    if(*buffer == '\n') break; // if no input, exit
-    removeNewline(buffer);
-
+    printf("%s@%s:%s> ", getenv("LOGNAME"), getenv("NAME"), getenv("PWD"));
+    input = readLine();
 
     // in/out redirection
     inF = outF = NULL;
-    extractInOutFile(buffer, &inF, &outF);
+    extractInOutFile(input, &inF, &outF);
 
     // command and args
-    argv[argc = 0] = strtok(buffer, DELIM);
+    argv[argc = 0] = strtok(input, DELIM);
     while((argv[++argc] = strtok(NULL, DELIM)));
 
     // printf("InF = %s\nOutF = %s\n", inF, outF);
@@ -49,6 +46,7 @@ int main() {
       return 0;
     } else waitpid(pid, NULL, 0);
 
+    if(input) {free(input); input = NULL;}
   }
 
   printf("Bye :)\n");

@@ -1,9 +1,50 @@
 #include <ctype.h>
-// #include <sys/types.h>
-// #include <sys/stat.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+#define BUFFER_USIZE 16
+
+char* readLine(void) {
+  int c;
+  unsigned int bufferCurrentSize = BUFFER_USIZE, pos = 0;
+
+  char* buffer = malloc(bufferCurrentSize*sizeof(char));
+  if(buffer == NULL) {
+    fprintf(stderr, "ERROR: out of memory\n");
+    exit(EXIT_FAILURE);
+  }
+
+  while(1) {
+    c = getchar();
+
+    if(c==EOF) exit(EXIT_FAILURE);
+
+    if(c=='\n') { // when user pressed enter
+      if(pos>0 && buffer[pos-1]=='\\' && c=='\n') { // if last character is backslash
+        printf("> ");
+        buffer[--pos] = 0; // go back
+        continue; // and continue getting chars
+      }
+      else break; // or stop getting characters
+    }
+
+    // check if buffer large enough, and realloc if not
+    if(pos >= bufferCurrentSize) {
+      bufferCurrentSize += BUFFER_USIZE;
+      buffer = realloc(buffer, bufferCurrentSize*sizeof(char));
+      if(buffer == NULL) {
+        fprintf(stderr, "ERROR: out of memory\n");
+        exit(EXIT_FAILURE);
+      }
+    }
+
+    buffer[pos++] = (char)c;
+  }
+
+  buffer[pos] = 0;
+  return buffer;
+}
 
 void removeNewline(char* str) {
   while(*str!='\n' && *str!='\0') str++;
