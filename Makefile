@@ -1,12 +1,18 @@
 GCC_FLAGS = -Wall -g
 
-all: toto mini-shell
+all: mini-shell
 
-mini-shell: mini-shell.c
-	gcc ${GCC_FLAGS} -o mini-shell mini-shell.c
+mini-shell: mini-shell.o util.o
+	gcc ${GCC_FLAGS} -o mini-shell mini-shell.o util.o
 
-toto: toto.c
-	gcc ${GCC_FLAGS} -o toto toto.c
+mini-shell.o: mini-shell.c
+	gcc ${GCC_FLAGS} -c mini-shell.c
+
+util.o: util.c util.h
+	gcc ${GCC_FLAGS} -c util.c
+
+builtin.o: builtin.c builtin.h
+	gcc ${GCC_FLAGS} -c builtin.c
 
 clean:
-	rm toto mini-shell
+	rm *.o mini-shell
