@@ -11,6 +11,9 @@ mini-shell.o: mini-shell.c
 util.o: util.c util.h
 	gcc ${GCC_FLAGS} -c util.c
 
+input_parser.o: input_parser.c input_parser.h
+	gcc ${GCC_FLAGS} -c input_parser.c
+
 builtin.o: builtin.c builtin.h
 	gcc ${GCC_FLAGS} -c builtin.c
 
