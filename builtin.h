@@ -1,10 +1,12 @@
-typedef struct builtin_t {
-  char* namefunc;
-  int (*function)(char**);
-} builtin_t;
 
-int cd(char **args);
+/*int cd(char **args);
 
-int exit(char **args);
+int SeCExit(char **args);
 
-builtin_t* builtinFunc;
+char *builtinStr[2];
+
+int (*builtinFunc[2]) (char **);
+
+int nbBuiltins();*/
+
+int tryBuiltin(char** argv, int * returnValue);

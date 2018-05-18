@@ -1,24 +1,41 @@
-#include "builtin.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
+int cd(char **args) {
+  if(chdir(args[1]?args[1]:getenv("HOME")) != 0)
+    printf("cd failed\n");
 
-int cd(char **args)
-{
-  if (args[1] == NULL) {
-    chdir(getenv("HOME"));
-  } else {
-    if (chdir(args[1]) != 0) {
-      perror("cd failed");
-    }
-  }
   return 1;
 }
 
-int exit(char **args) {
+int SeCExit(char **args) {
   return 0;
 }
 
-builtinFunc[] = {
-  {"cd",&cd},
-  {"exit",&exit}
+char *builtinStr[2] = {
+  "cd",
+  "exit"
 };
+
+int (*builtinFunc[2]) (char **) = {
+  &cd,
+  &SeCExit
+};
+
+int nbBuiltins() {
+  return sizeof(builtinStr) / sizeof(char *);
+}
+
+//recherche de la builtinFunc
+int tryBuiltin(char** argv, int * returnValue) {
+  for(unsigned int i=0; i<nbBuiltins(); i++) {
+    if(strcmp(argv[0], builtinStr[i])==0) {
+      int a = (*builtinFunc[i])(argv);
+      if(returnValue) *returnValue = a;
+      return 0;
+    }
+  }
+  return -1;
+}
