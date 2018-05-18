@@ -46,6 +46,15 @@ char* readLine(void) {
   return buffer;
 }
 
+
+void checkMalloc(void* p) {
+  if(p == NULL) {
+    fprintf(stderr, "Error: out of memory\n");
+    exit(EXIT_FAILURE);
+  }
+}
+
+
 void removeNewline(char* str) {
   while(*str!='\n' && *str!='\0') str++;
   *str = '\0';

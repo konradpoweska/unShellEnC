@@ -3,6 +3,8 @@
 
 char* readLine(void);
 
+void checkMalloc(void* p);
+
 void removeNewline(char* str);
 
 void extractInOutFile(char* input, char** inF, char** outF);
