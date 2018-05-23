@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <dirent.h>
+
+
 
 int cd(char **args) {
   if(chdir(args[1]?args[1]:getenv("HOME")) != 0)
@@ -11,17 +14,49 @@ int cd(char **args) {
 }
 
 int SeCExit(char **args) {
-  return 0;
+  exit(0);
+  printf("exit failed\n");
+  return 1;
 }
 
-char *builtinStr[2] = {
+int cat(char **args){
+  FILE* startfile;
+  if(args[1]){
+    startfile = fopen(args[1],"r");}
+  else{
+    startfile=stdin;}
+
+  int character=getc(startfile);
+  while(character != EOF){
+    putc((char)character,stdout);
+    character=getc(startfile);
+  }
+  return 1;
+}
+
+int ls(char** args){
+  DIR* dir = opendir(getenv("PWD"));
+  struct dirent* ent = readdir(dir);
+  while (ent != NULL) {
+    printf ("%s\n", ent->d_name);
+    ent=readdir(dir);
+  }
+  closedir (dir);
+  return 1;
+}
+
+char *builtinStr[4] = {
   "cd",
-  "exit"
+  "exit",
+  "cat",
+  "ls"
 };
 
-int (*builtinFunc[2]) (char **) = {
+int (*builtinFunc[4]) (char **) = {
   &cd,
-  &SeCExit
+  &SeCExit,
+  &cat,
+  &ls
 };
 
 int nbBuiltins() {
