@@ -17,5 +17,8 @@ input_parser.o: input_parser.c input_parser.h
 builtin.o: builtin.c builtin.h
 	gcc ${GCC_FLAGS} -c builtin.c
 
+redirect-io.o: redirect-io.c redirect-io.h
+	gcc ${GCC_FLAGS} -c redirect-io.c
+
 clean:
 	rm *.o mini-shell
