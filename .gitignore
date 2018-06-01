@@ -1,2 +1,5 @@
 *.o
 mini-shell
+a.out
+*.bak
+test*

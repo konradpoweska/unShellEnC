@@ -52,11 +52,9 @@ void execCommand_free(execCommand* el) {
 
 
 
-char* findText(char* input) {
-  // returns a pointer to the charachter after the found text,
-  // or NULL if no text has been found
+char* findText(char* c) {
+  // returns a pointer to the charachter after the found text
 
-  char* c = input; // keep the initial pointer
   int offset = 0; // for removing quotes by shifting
   char quotes = 0; // modes : 0, '\'' or '\"'
 
@@ -85,7 +83,7 @@ char* findText(char* input) {
 
   if(quotes) fprintf(stderr, "Error: missing closing quote.\n");
   if(offset) *(c-offset) = 0;
-  return (c != input) ? c : NULL;
+  return c;
 }
 
 
@@ -115,7 +113,7 @@ execCommand *parseInput(char *input) {
       do input++; while(isspace(*input));
 
       char* input2 = findText(input);
-      if(input2 == NULL) continue;
+      if(input2 == input) continue; // if no filename found, abort
 
       if(*c=='<') currentCommand->inF = input;
       else if(*c=='>') currentCommand->outF = input;
