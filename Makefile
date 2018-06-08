@@ -2,8 +2,8 @@ GCC_FLAGS = -Wall -g
 
 all: mini-shell
 
-mini-shell: mini-shell.o util.o builtin.o
-	gcc ${GCC_FLAGS} -o mini-shell mini-shell.o util.o builtin.o
+mini-shell: mini-shell.o util.o builtin.o input_parser.o redirect-io.o execution.o
+	gcc ${GCC_FLAGS} -o mini-shell mini-shell.o util.o builtin.o input_parser.o redirect-io.o execution.o
 
 mini-shell.o: mini-shell.c
 	gcc ${GCC_FLAGS} -c mini-shell.c
