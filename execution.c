@@ -31,7 +31,6 @@ void executeCommandSequence(execCommand* command) {
     // init pipe & redirect output if next command & no redirections
     if(command->next && !command->outF && !command->next->inF) {
       pipe(pipeFd[i%2]);
-      // printf("---Ressource leak test: %d %d ---\n", pipeFd[i%2][0], pipeFd[i%2][1]);
       fileFd[1] = pipeFd[i%2][1];
     }
 

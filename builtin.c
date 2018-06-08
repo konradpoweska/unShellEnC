@@ -12,6 +12,7 @@
 #include "util.h"
 
 
+
 int cd(char **args) {
   if(chdir(args[1]?args[1]:getenv("HOME")) != 0)
     printf("cd failed\n");
@@ -19,26 +20,31 @@ int cd(char **args) {
   return 1;
 }
 
+
+
 int SeCExit(char **args) {
   exit(0);
-  printf("exit failed\n");
+  fprintf(stderr, "exit failed\n");
   return 1;
 }
+
+
 
 int cat(char **args){
   FILE* startfile;
-  if(args[1]){
-    startfile = fopen(args[1],"r");}
-  else{
-    startfile=stdin;}
+  if(args[1])
+    startfile = fopen(args[1],"r");
+  else
+    startfile = stdin;
 
-  int character=getc(startfile);
-  while(character != EOF){
-    putc((char)character,stdout);
-    character=getc(startfile);
+  int character = getc(startfile);
+  while(character != EOF) {
+    putc((char)character, stdout);
+    character = getc(startfile);
   }
   return 1;
 }
+
 
 
 int ls(char** args){
@@ -98,6 +104,7 @@ int ls(char** args){
 }
 
 
+
 int find (char** args){
   //parsing options and path
   char* initialPath=malloc(512*sizeof(char));
@@ -141,6 +148,7 @@ int find (char** args){
 
   return 1;
 }
+
 
 
 //Used in ls to print permissions
@@ -239,21 +247,12 @@ int (*builtinFunc[5]) (char **) = {
   &find
 };
 
+
+
 int nbBuiltins() {
   return sizeof(builtinStr) / sizeof(char *);
 }
 
-//search of builtinFunc
-int tryBuiltin(char** argv, int * returnValue) {
-  for(unsigned int i=0; i<nbBuiltins(); i++) {
-    if(strcmp(argv[0], builtinStr[i])==0) {
-      int a = (*builtinFunc[i])(argv);
-      if(returnValue) *returnValue = a;
-      return 0;
-    }
-  }
-  return -1;
-}
 
 
 int (*getBuiltin(char* command))(char **) {

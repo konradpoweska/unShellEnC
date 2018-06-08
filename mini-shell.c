@@ -5,11 +5,9 @@
 #include "input_parser.h"
 #include "execution.h"
 
-//////////// MAIN ////////////
 
 int main() {
   printf("Welcome to mini-shell!\n");
-
 
   // input handling
   char* input;

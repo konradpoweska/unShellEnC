@@ -5,12 +5,15 @@
 #include <unistd.h>
 #define BUFFER_USIZE 16
 
+
+
 void checkMalloc(void* p) {
   if(p == NULL) {
     fprintf(stderr, "Error: out of memory\n");
     exit(EXIT_FAILURE);
   }
 }
+
 
 
 char* readLine(void) {
