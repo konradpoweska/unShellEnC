@@ -20,5 +20,8 @@ builtin.o: builtin.c builtin.h
 redirect-io.o: redirect-io.c redirect-io.h
 	gcc ${GCC_FLAGS} -c redirect-io.c
 
+execution.o: execution.c execution.h
+	gcc ${GCC_FLAGS} -c execution.c
+
 clean:
 	rm *.o mini-shell
