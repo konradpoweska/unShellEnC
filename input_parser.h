@@ -23,6 +23,5 @@ void execCommand_removeEmpty(execCommand** headPtr);
 
 void execCommand_print(execCommand* l);
 
-void execCommand_demo(void);
 
 #endif

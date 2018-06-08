@@ -173,7 +173,7 @@ void execCommand_removeEmpty(execCommand** headPtr) {
 void execCommand_print(execCommand* l) {
   char** c;
   printf("[\n");
-  while(1) {
+  while(l) {
     printf("\t{\n\t\targc: %d,\n\t\targv: [", l->argc);
     printf("\"%s\"", *(c=l->argv));
     while(*(++c)) printf(", \"%s\"", *c);
@@ -182,22 +182,19 @@ void execCommand_print(execCommand* l) {
     if(l->outF) printf(",\n\t\toutF: \"%s\"", l->outF);
     if(l->errF) printf(",\n\t\terrF: \"%s\"", l->errF);
     printf("\n\t}");
-    if((l=l->next)) printf(",\n");
-    else {printf("\n]\n"); break;}
+    if((l=l->next)) printf(",");
+    printf("\n");
   }
+  printf("]\n");
 }
 
 
+/* USAGE DEMO:
 
-
-void execCommand_demo(void) {
-  char buffer[512];
-  execCommand* seq;
-  while(printf("input: ") && fgets(buffer, 512, stdin) && *buffer!='\n') {
-    removeNewline(buffer);
-    seq = parseInput(buffer);
-    execCommand_removeEmpty(&seq);
+    char *input;
+    execCommand* seq = parseInput(input);
     execCommand_print(seq);
+    execCommand_removeEmpty(&seq);
     execCommand_free(seq);
-  }
-}
+
+*/

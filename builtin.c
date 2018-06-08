@@ -74,3 +74,12 @@ int tryBuiltin(char** argv, int * returnValue) {
   }
   return -1;
 }
+
+
+int (*getBuiltin(char* command))(char **) {
+  for(unsigned int i=0; i<nbBuiltins(); i++)
+    if(strcmp(command, builtinStr[i])==0)
+      return builtinFunc[i];
+
+  return NULL;
+}

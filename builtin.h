@@ -10,3 +10,5 @@ int (*builtinFunc[2]) (char **);
 int nbBuiltins();*/
 
 int tryBuiltin(char** argv, int * returnValue);
+
+int (*getBuiltin(char* command))(char**);

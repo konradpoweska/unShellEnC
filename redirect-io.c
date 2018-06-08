@@ -17,11 +17,10 @@ void openIOFiles(char** files, int* fd) { // fd used for output
   unsigned int i;
   for(i=0; i<=2; i++) {
 
-    fd[i] = -1;
     if(!files[i]) continue; // skip if file not provided
 
     fd[i] = open(files[i], i?(O_WRONLY|O_CREAT|O_EXCL):O_RDONLY);
-    if(fd<0) {
+    if(fd[i]<0) {
       fprintf(stderr, "Error: can't %s %s\n", i?"write into":"open", files[i]);
       continue;
     }
