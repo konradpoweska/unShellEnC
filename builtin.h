@@ -1,4 +1,4 @@
-
+void getFile(char* path, char* searchName,int print);
 
 char* printMode(mode_t permissions, char* perms);
 
