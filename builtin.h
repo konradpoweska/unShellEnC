@@ -1,13 +1,6 @@
 
-/*int cd(char **args);
 
-int SeCExit(char **args);
-
-char *builtinStr[2];
-
-int (*builtinFunc[2]) (char **);
-
-int nbBuiltins();*/
+char* printMode(mode_t permissions, char* perms);
 
 int tryBuiltin(char** argv, int * returnValue);
 
