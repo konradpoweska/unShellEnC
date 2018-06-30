@@ -51,7 +51,7 @@ void executeCommandSequence(execCommand* command) {
       // execute external program in a child process
       if((pid=fork())==0) {
         // close output of the output pipe in child process
-        close(pipeFd[i%2][0]);
+        safeClose(&pipeFd[i%2][0]);
 
         openCommandIOFiles(command, fileFd);
         redirectIO(fileFd);

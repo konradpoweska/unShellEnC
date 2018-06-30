@@ -60,7 +60,7 @@ void redirectIO(int* fd) {
 
   }
 
-  for(i=0; i<=2; i++) close(fd[i]);
+  for(i=0; i<=2; i++) if(fd[i]>=0) close(fd[i]);
 }
 
 

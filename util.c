@@ -27,6 +27,7 @@ char* readLine(void) {
     c = getchar();
 
     if(c==EOF) {
+      free(buffer);
       putchar('\n');
       exit(EXIT_SUCCESS);
     }
